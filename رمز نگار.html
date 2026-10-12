@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>رمزنگار</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0b1120 0%, #0f172a 100%);
+            font-family: meem, 'iransansx', 'Vazirmatn', digi gaf, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #c084fc, #60a5fa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .sub {
+            color: #94a3b8;
+            border-right: 3px solid #3b82f6;
+            padding-right: 12px;
+            margin-bottom: 1.8rem;
+            font-size: 0.85rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.3rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+            color: #cbd5e1;
+        }
+
+        textarea, input {
+            width: 100%;
+            padding: 12px 16px;
+            background: #0f172a;
+            border: 1.5px solid #334155;
+            border-radius: 1.5rem;
+            font-family: 'iransansx', 'meem', monospace;
+            font-size: 0.95rem;
+            color: #f1f5f9;
+            resize: vertical;
+            transition: 0.2s;
+        }
+
+        textarea:focus, input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        button {
+            background: #3b82f6;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 3rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            flex: 1;
+        }
+
+        button:active {
+            transform: scale(0.97);
+        }
+
+        button.secondary {
+            background: #334155;
+        }
+
+        button.secondary:hover {
+            background: #475569;
+        }
+
+        button.danger {
+            background: #dc2626;
+        }
+
+        .output-area {
+            background: #0f172a;
+            border-radius: 1.5rem;
+            padding: 1rem;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 0.8rem;
+            border: 1px solid #334155;
+            max-height: 200px;
+            overflow: auto;
+            direction: ltr;
+            text-align: left;
+            margin-top: 0.5rem;
+        }
+
+        .copy-btn-icon {
+            background: #1e293b;
+            padding: 10px;
+            border-radius: 3rem;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            margin-top: 12px;
+            width: 100%;
+            border: 1px solid #3b82f6;
+            transition: 0.2s;
+        }
+
+        .copy-btn-icon:hover {
+            background: #2d3a5e;
+        }
+
+        .badge {
+            background: #1e293b;
+            border-radius: 2rem;
+            padding: 5px 12px;
+            font-size: 0.7rem;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        hr {
+            margin: 20px 0;
+            border-color: #334155;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #64748b;
+        }
+
+        .mode-switch {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: #1e293b;
+            border-radius: 3rem;
+            padding: 5px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            background: transparent;
+            color: #cbd5e1;
+            padding: 8px;
+            margin: 0;
+            border-radius: 2rem;
+        }
+
+        .mode-btn.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .info-note {
+            background: #1e293b;
+            border-radius: 1rem;
+            padding: 12px;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 550px) {
+            .card {
+                padding: 1.2rem;
+            }
+            button {
+                padding: 10px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <h1>🔐 رمزنگار متن <span style="font-size:0.8rem;">| کاملا ایمن</span></h1>
+        <div class="sub">متن را با یک رمز قوی رمزگذاری کنید. فقط کسی که رمز دارد می‌تواند باز کند.</div>
+
+        <!-- حالت: رمزگذاری / رمزگشایی -->
+        <div class="mode-switch" id="modeSwitch">
+            <button class="mode-btn active" data-mode="encrypt">🔒 رمزگذاری</button>
+            <button class="mode-btn" data-mode="decrypt">🔓 رمزگشایی</button>
+        </div>
+
+        <!-- بخش رمزگذاری -->
+        <div id="encryptSection">
+            <div class="form-group">
+                <label>📝 متن اصلی (متن ساده)</label>
+                <textarea id="plainText" rows="4" placeholder="متن خود را اینجا بنویسید..."></textarea>
+            </div>
+        </div>
+
+        <!-- بخش رمزگشایی (مخفی اول) -->
+        <div id="decryptSection" style="display:none;">
+            <div class="form-group">
+                <label>🔐 متن رمز شده (خروجی رمزگذاری)</label>
+                <textarea id="cipherText" rows="4" placeholder="متن رمزگذاری شده را در اینجا جایگذاری کنید..."></textarea>
+            </div>
+        </div>
+
+        <!-- رمز عبور مشترک -->
+        <div class="form-group">
+            <label>🔑 رمز عبور (قوی انتخاب کنید)</label>
+            <input type="password" id="password" placeholder="رمز عبور ..." autocomplete="off">
+        </div>
+
+        <div class="btn-group">
+            <button id="actionBtn">🚀 اجرا</button>
+            <button id="swapBtn" class="secondary">🔄 جابجایی متن‌ها</button>
+            <button id="clearBtn" class="secondary danger">🗑️ پاک کردن همه</button>
+        </div>
+
+        <!-- خروجی با دکمه کپی اختصاصی -->
+        <div class="form-group" style="margin-top: 20px;">
+            <label>📋 نتیجه</label>
+            <div class="output-area" id="resultBox"></div>
+            <div id="copyResultBtn" class="copy-btn-icon">📋 کلیک برای کپی نتیجه</div>
+        </div>
+
+        <div class="info-note">
+            ⚡ الگوریتم: AES-GCM 256 بیت (Web Crypto API) + مشتق‌سازی کلید با PBKDF2 (۱۰۰,۰۰۰ بار).<br>
+            ✅ متن رمز شده شامل salt + IV + ciphertext (به صورت Base64) است. هیچ داده‌ای خارج از مرورگر ذخیره نمی‌شود.<br>
+            🔁 برای رمزگشایی، خروجی رمزگذاری را در بخش «رمزگشایی» قرار دهید و رمز یکسان را وارد کنید.
+        </div>
+    </div>
+    <div class="footer">
+        Made By AmirMaxMoney
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ----- عناصر DOM -----
+        const modeSwitchBtns = document.querySelectorAll('.mode-btn');
+        const encryptSection = document.getElementById('encryptSection');
+        const decryptSection = document.getElementById('decryptSection');
+        const plainTextarea = document.getElementById('plainText');
+        const cipherTextarea = document.getElementById('cipherText');
+        const passwordInput = document.getElementById('password');
+        const actionBtn = document.getElementById('actionBtn');
+        const swapBtn = document.getElementById('swapBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const resultBox = document.getElementById('resultBox');
+        const copyResultBtn = document.getElementById('copyResultBtn');
+
+        let currentMode = 'encrypt'; // 'encrypt' or 'decrypt'
+
+        // ----- تعویض حالت (رمزگذاری / رمزگشایی) -----
+        function setMode(mode) {
+            currentMode = mode;
+            if (mode === 'encrypt') {
+                encryptSection.style.display = 'block';
+                decryptSection.style.display = 'none';
+                actionBtn.innerHTML = '🔒 رمزگذاری متن';
+            } else {
+                encryptSection.style.display = 'none';
+                decryptSection.style.display = 'block';
+                actionBtn.innerHTML = '🔓 رمزگشایی متن';
+            }
+            // پاک کردن نتیجه هنگام تغییر حالت
+            resultBox.innerText = '';
+            // آپدیت active class
+            modeSwitchBtns.forEach(btn => {
+                if ((mode === 'encrypt' && btn.getAttribute('data-mode') === 'encrypt') ||
+                    (mode === 'decrypt' && btn.getAttribute('data-mode') === 'decrypt')) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        modeSwitchBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const mode = btn.getAttribute('data-mode');
+                if (mode === 'encrypt') setMode('encrypt');
+                else setMode('decrypt');
+            });
+        });
+
+        // ----- توابع کمکی AES-GCM با Web Crypto -----
+        function bufferToBase64(buffer) {
+            const bytes = new Uint8Array(buffer);
+            let binary = '';
+            for (let i = 0; i < bytes.byteLength; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            return btoa(binary);
+        }
+
+        function base64ToBuffer(base64) {
+            const binary = atob(base64);
+            const bytes = new Uint8Array(binary.length);
+            for (let i = 0; i < binary.length; i++) {
+                bytes[i] = binary.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        async function deriveKey(password, salt) {
+            const encoder = new TextEncoder();
+            const keyMaterial = await crypto.subtle.importKey(
+                'raw',
+                encoder.encode(password),
+                { name: 'PBKDF2' },
+                false,
+                ['deriveKey']
+            );
+            return crypto.subtle.deriveKey(
+                {
+                    name: 'PBKDF2',
+                    salt: salt,
+                    iterations: 100000,
+                    hash: 'SHA-256'
+                },
+                keyMaterial,
+                { name: 'AES-GCM', length: 256 },
+                true,
+                ['encrypt', 'decrypt']
+            );
+        }
+
+        async function encrypt(plainText, password) {
+            if (!plainText || !password) throw new Error('متن و رمز عبور الزامی است');
+            const encoder = new TextEncoder();
+            const plainData = encoder.encode(plainText);
+            const salt = crypto.getRandomValues(new Uint8Array(16));
+            const iv = crypto.getRandomValues(new Uint8Array(12));
+            const key = await deriveKey(password, salt);
+            const encrypted = await crypto.subtle.encrypt(
+                {
+                    name: 'AES-GCM',
+                    iv: iv,
+                    tagLength: 128
+                },
+                key,
+                plainData
+            );
+            const resultBuffer = new Uint8Array(salt.byteLength + iv.byteLength + encrypted.byteLength);
+            resultBuffer.set(salt, 0);
+            resultBuffer.set(iv, salt.byteLength);
+            resultBuffer.set(new Uint8Array(encrypted), salt.byteLength + iv.byteLength);
+            return bufferToBase64(resultBuffer.buffer);
+        }
+
+        async function decrypt(encryptedBase64, password) {
+            if (!encryptedBase64 || !password) throw new Error('متن رمز شده و رمز عبور الزامی است');
+            const fullBuffer = base64ToBuffer(encryptedBase64);
+            const fullArray = new Uint8Array(fullBuffer);
+            if (fullArray.length < 28) throw new Error('داده رمز شده معتبر نیست');
+            const salt = fullArray.slice(0, 16);
+            const iv = fullArray.slice(16, 28);
+            const ciphertext = fullArray.slice(28);
+            const key = await deriveKey(password, salt);
+            try {
+                const decrypted = await crypto.subtle.decrypt(
+                    {
+                        name: 'AES-GCM',
+                        iv: iv,
+                        tagLength: 128
+                    },
+                    key,
+                    ciphertext
+                );
+                const decoder = new TextDecoder();
+                return decoder.decode(decrypted);
+            } catch (e) {
+                throw new Error('رمزگشایی ناموفق! رمز عبور اشتباه است یا داده خراب شده.');
+            }
+        }
+
+        // ----- عملیات اصلی بسته به mode -----
+        async function handleAction() {
+            const password = passwordInput.value.trim();
+            if (!password) {
+                resultBox.innerText = '❌ لطفاً رمز عبور را وارد کنید';
+                return;
+            }
+
+            try {
+                if (currentMode === 'encrypt') {
+                    const plain = plainTextarea.value;
+                    if (!plain) {
+                        resultBox.innerText = '❌ متنی برای رمزگذاری وجود ندارد';
+                        return;
+                    }
+                    resultBox.innerText = '⏳ در حال رمزگذاری ...';
+                    const encrypted = await encrypt(plain, password);
+                    resultBox.innerText = encrypted;
+                } 
+                else {
+                    const cipher = cipherTextarea.value.trim();
+                    if (!cipher) {
+                        resultBox.innerText = '❌ متن رمز شده را وارد کنید';
+                        return;
+                    }
+                    resultBox.innerText = '⏳ در حال رمزگشایی ...';
+                    const decrypted = await decrypt(cipher, password);
+                    resultBox.innerText = decrypted;
+                }
+            } catch (err) {
+                console.error(err);
+                resultBox.innerText = `⚠️ خطا: ${err.message}`;
+            }
+        }
+
+        // ----- جابجایی متن: اگر حالت رمزگذاری باشه، نتیجه رو میبره به متن رمزگشایی و بالعکس -----
+        function swapTexts() {
+            const currentResult = resultBox.innerText;
+            if (!currentResult || currentResult.startsWith('❌') || currentResult.startsWith('⏳') || currentResult.startsWith('⚠️')) {
+                return;
+            }
+            if (currentMode === 'encrypt') {
+                cipherTextarea.value = currentResult;
+                setMode('decrypt');
+                resultBox.innerText = '';
+                plainTextarea.value = '';
+            } else {
+                plainTextarea.value = currentResult;
+                setMode('encrypt');
+                resultBox.innerText = '';
+                cipherTextarea.value = '';
+            }
+            passwordInput.value = '';
+        }
+
+        function clearAll() {
+            plainTextarea.value = '';
+            cipherTextarea.value = '';
+            passwordInput.value = '';
+            resultBox.innerText = '';
+        }
+
+        // ----- دکمه کپی نتیجه (با قابلیت اطمینان در موبایل) -----
+        async function copyResult() {
+            const text = resultBox.innerText;
+            if (!text || text.startsWith('❌') || text.startsWith('⏳') || text.startsWith('⚠️')) {
+                alert('چیزی برای کپی وجود ندارد یا نتیجه خطا است.');
+                return;
+            }
+            try {
+                await navigator.clipboard.writeText(text);
+                const originalText = copyResultBtn.innerHTML;
+                copyResultBtn.innerHTML = '✅ کپی شد!';
+                setTimeout(() => { copyResultBtn.innerHTML = originalText; }, 1500);
+            } catch (err) {
+                // fallback برای مرورگرهای قدیمی
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('متن کپی شد (روش کمکی)');
+            }
+        }
+
+        // رویدادها
+        actionBtn.addEventListener('click', handleAction);
+        swapBtn.addEventListener('click', swapTexts);
+        clearBtn.addEventListener('click', clearAll);
+        copyResultBtn.addEventListener('click', copyResult);
+
+        // Enter در فیلد رمز
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleAction();
+        });
+
+        // مقداردهی اولیه
+        setMode('encrypt');
+    })();
+</script>
+</body>
+</html>
